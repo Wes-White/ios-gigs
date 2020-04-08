@@ -43,7 +43,7 @@ class APIController {
         } catch {
             NSLog("There was an error encoding the User Object: \(error)")
         }
-         
+        
         // Perform the request (data task)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             // Handle Errors with the request.
@@ -94,14 +94,13 @@ class APIController {
                 return
             }
             
+            let decoder = JSONDecoder()
+            
             do {
-                //look at the bearer and decode accordingly
-                let bearer = try JSONDecoder().decode(Bearer.self, from: data)
-                print(bearer)
-                // Setting the token that was returned from the API.
-                self.bearer = bearer
-                
-                
+                //decode token and set to bearer
+                self.bearer = try decoder.decode(Bearer.self, from: data)
+                completion(nil)
+                print(self.bearer)
             } catch {
                 NSLog("Error decoding the token: \(error)")
                 completion(error)

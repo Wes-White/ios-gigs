@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -56,10 +56,7 @@ class LoginViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     
-                    
-                    let alert = UIAlertController(title: "Sign Up Successful",
-                                                  message: "Please login.",
-                                                  preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Sign Up Successful",message: "Please login.",preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     
                     alert.addAction(okAction)
@@ -97,13 +94,13 @@ class LoginViewController: UIViewController {
         
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
