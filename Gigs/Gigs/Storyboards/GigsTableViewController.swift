@@ -15,15 +15,19 @@ class GigsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if apiController.bearer == nil {
             performSegue(withIdentifier: "LoginSegue", sender: self)
             }
         
-       updateGigs()
-            
         }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        
+        updateGigs()
+    }
+    
     
      func updateGigs() {
         apiController.getAllGigs { (result) in

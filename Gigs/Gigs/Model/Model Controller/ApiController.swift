@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import  UIKit
+
 
 class APIController {
     
@@ -27,20 +27,20 @@ class APIController {
     }
     
     enum HeaderNames: String {
-        case authorization = "Authorization"
+        case auth = "Authorization"
         case contentType = "Content-Type"
     }
     
     let baseURL = URL(string: "https://lambdagigs.vapor.cloud/api")!
     private lazy var signUpRequestURL = baseURL.appendingPathComponent("/users/signup")
     private lazy var loginURL = baseURL.appendingPathComponent("/users/login")
-    private lazy var getAllGigsURL = baseURL.appendingPathComponent("/gigs/")
+    private lazy var getAllGigsURL = baseURL.appendingPathComponent("gigs")
     private lazy var postGigURL = baseURL.appendingPathComponent("/gigs/")
     
-    var gigs: [Gig] = []
+    
     
     var bearer: Bearer?
-    
+    var gigs: [Gig] = []
     
     //create func for sign up
     
@@ -116,8 +116,11 @@ class APIController {
             do {
                 //decode token and set to bearer
                 self.bearer = try decoder.decode(Bearer.self, from: data)
+                
+                //Save the token with UserDefaults
+                UserDefaults.standard.set(self.bearer?.token, forKey: "token")
                 completion(nil)
-                print(self.bearer)
+                print("AFTER LOGIN: \(self.bearer!)")
             } catch {
                 NSLog("Error decoding the token: \(error)")
                 completion(error)
@@ -130,20 +133,21 @@ class APIController {
     
     //create a func to get gigs- (Array of gigs for success and an error for failure.)
     func getAllGigs(completion: @escaping (Result<[Gig], APIError>) -> Void) {
-        //build request
-        var request = URLRequest(url: getAllGigsURL)
-        //set http method
-        request.httpMethod = HTTPMethod.get.rawValue
-        //make sure user is authenticated
         
-        //do we have a token?
-        guard let bearer = bearer else {
+        //do we have a token? checking from userDefaults
+
+        guard let token = UserDefaults.standard.value(forKey: "token")  else {
             //result is failure, error is APIError case noBearer
             completion(.failure(.noBearerError))
             return
         }
+        
+        //build request
+        var request = URLRequest(url: getAllGigsURL)
+        //set http method
+        request.httpMethod = HTTPMethod.get.rawValue
         //set the value of the token in the HeaderField
-        request.setValue("Bear \(bearer.token)", forHTTPHeaderField: HeaderNames.authorization.rawValue)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: HeaderNames.auth.rawValue)
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
