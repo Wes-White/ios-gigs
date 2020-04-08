@@ -183,8 +183,17 @@
                         <viewLayoutGuide key="safeArea" id="ccS-UT-uhL"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Gig" id="Zri-yb-Sea">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="y9m-Hf-ga8"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="y9m-Hf-ga8">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="OPA-Xo-2qz" id="lmC-tE-Mv0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descriptionTextView" destination="ZfO-FZ-EXK" id="41D-QM-iIo"/>
+                        <outlet property="dueDateDatePicker" destination="g7o-Wx-fpr" id="TVq-AC-Oex"/>
+                        <outlet property="titleTextField" destination="YqS-Le-YSK" id="5bF-FN-VAi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPH-Ck-pn7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

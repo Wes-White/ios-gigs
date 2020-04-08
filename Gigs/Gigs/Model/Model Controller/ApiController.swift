@@ -24,6 +24,7 @@ class APIController {
         case serverError(Error)
         case statusCodeError
         case decodingError
+        case encodingError
     }
     
     enum HeaderNames: String {
@@ -185,8 +186,52 @@ class APIController {
     
     //create a func to post a new gig
     
-    func postGig()  {
+    func postGig(with gig: Gig, completion: @escaping (Result<Gig, APIError>) -> Void) {
+        //do we have a token? checking from userDefaults
+        guard let token = UserDefaults.standard.value(forKey: "token")  else {
+        //result is failure, error is APIError case noBearer
+        completion(.failure(.noBearerError))
+        return
+        }
         
-        //append to gigs array
+        var request = URLRequest(url: postGigURL)
+        request.httpMethod = HTTPMethod.post.rawValue
+        request.setValue("application/json", forHTTPHeaderField: HeaderNames.contentType.rawValue)
+        request.setValue("token", forHTTPHeaderField: HeaderNames.auth.rawValue)
+        
+        let encoder = JSONEncoder()
+        
+        do {
+            let jsonData = try encoder.encode(gig)
+            
+        } catch {
+            completion(.failure(.encodingError))
+        }
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(.failure(.serverError(error)))
+                NSLog("Error from the server: \(error)")
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                completion(.failure(.statusCodeError))
+               
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noDataError))
+                return
+            }
+            let decoder = JSONDecoder()
+            
+            do {
+                let gig = try decoder.decode(Gig.self, from: data)
+                completion(.success(gig))
+            } catch {
+                completion(.failure(.decodingError))
+            }
+        }.resume()
     }
 }

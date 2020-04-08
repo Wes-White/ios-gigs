@@ -10,21 +10,68 @@ import UIKit
 
 class GigDetailViewController: UIViewController {
 
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var dueDateDatePicker: UIDatePicker!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    
+    var apiController = APIController()
+    var gig: Gig?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateViews()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        //do we have title
+        guard let title = titleTextField.text,
+            !title.isEmpty else { return }
+        //description?
+        guard let description = descriptionTextView.text,
+            !descriptionTextView.text.isEmpty else { return }
+        
+        let newGig = Gig(title: title, description: description, dueDate: "")
+        apiController.postGig(with: newGig) { (result) in
+            
+            do {
+                let gig = try result.get()
+                self.apiController.gigs.append(gig)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+            } catch {
+                if let error = error as? APIController.APIError {
+                    switch error {
+                        
+                    case .noDataError:
+                        NSLog("There was an error retrieving the data: \(error)")
+                    case .noBearerError:
+                        NSLog("There was an error validating your token: \(error)")
+                    case .serverError(_):
+                        NSLog("There was an error on the server: \(error)")
+                    case .statusCodeError:
+                        NSLog("Unexpected status code errro \(error)")
+                    case .decodingError:
+                        NSLog("Error decoding the returned data: \(error)")
+                    case .encodingError:
+                        NSLog("Error encoding the returned data: \(error)")
+                    }
+                }
+            }
+        }
     }
-    */
-
+    
+    
+    
+    
+    func updateViews() {
+        if let gig = gig {
+            titleTextField.text = gig.title
+            descriptionTextView.text = gig.description
+            
+        }
+    }
 }
