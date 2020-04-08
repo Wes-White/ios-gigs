@@ -97,8 +97,10 @@ class APIController {
             do {
                 //look at the bearer and decode accordingly
                 let bearer = try JSONDecoder().decode(Bearer.self, from: data)
+                print(bearer)
                 // Setting the token that was returned from the API.
                 self.bearer = bearer
+                
                 
             } catch {
                 NSLog("Error decoding the token: \(error)")

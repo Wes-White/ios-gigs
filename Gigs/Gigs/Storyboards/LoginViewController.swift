@@ -9,6 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
     enum LoginType {
         case signUp
         case login
@@ -20,7 +21,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    var apiController = APIController?
+    var apiController = APIController()
     var loginType = LoginType.signUp
     
     override func viewDidLoad() {
@@ -38,6 +39,7 @@ class LoginViewController: UIViewController {
             !password.isEmpty else { return }
         
         let user = User(username: username, password: password)
+        
         //perform the login or signUp depending on the loginType
         if loginType == .signUp {
             signUp(with: user)
@@ -52,18 +54,21 @@ class LoginViewController: UIViewController {
             if let error = error {
                 NSLog("Error during sign up: \(error)")
             } else {
-                
-                let alert = UIAlertController(title: "Sign Up Successful",
-                                              message: "Please login.",
-                                              preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                
-                alert.addAction(okAction)
-                self.present(alert, animated: true) {
-                    //after alert change the following:::
-                    self.loginType = .login
-                    self.segmentedControll.selectedSegmentIndex = 1
-                    self.loginButton.setTitle("Login", for: .normal)
+                DispatchQueue.main.async {
+                    
+                    
+                    let alert = UIAlertController(title: "Sign Up Successful",
+                                                  message: "Please login.",
+                                                  preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true) {
+                        //after alert change the following:::
+                        self.loginType = .login
+                        self.segmentedControll.selectedSegmentIndex = 1
+                        self.loginButton.setTitle("Login", for: .normal)
+                    }
                 }
             }
         }
