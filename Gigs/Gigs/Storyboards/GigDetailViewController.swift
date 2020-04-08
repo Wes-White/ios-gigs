@@ -53,9 +53,9 @@ class GigDetailViewController: UIViewController {
                     case .serverError(_):
                         NSLog("There was an error on the server: \(error)")
                     case .statusCodeError:
-                        NSLog("Unexpected status code errro \(error)")
+                        NSLog("Unexpected status code error when posting new gig\(error)")
                     case .decodingError:
-                        NSLog("Error decoding the returned data: \(error)")
+                        NSLog("Error decoding the newly created Gig: \(error)")
                     case .encodingError:
                         NSLog("Error encoding the returned data: \(error)")
                     }

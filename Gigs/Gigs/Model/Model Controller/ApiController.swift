@@ -36,7 +36,7 @@ class APIController {
     private lazy var signUpRequestURL = baseURL.appendingPathComponent("/users/signup")
     private lazy var loginURL = baseURL.appendingPathComponent("/users/login")
     private lazy var getAllGigsURL = baseURL.appendingPathComponent("gigs")
-    private lazy var postGigURL = baseURL.appendingPathComponent("/gigs/")
+    private lazy var postGigURL = baseURL.appendingPathComponent("gigs")
     
     
     
