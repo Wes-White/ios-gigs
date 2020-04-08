@@ -16,6 +16,14 @@ class APIController {
         case post = "POST"
     }
     
+    //api errors
+    enum APIErrors: Error {
+        case fetchingError
+        case decodingError
+        case noDataError
+        case statusError
+    }
+    
     
     private let baseURL = URL(string: "https://lambdagigapi.herokuapp.com/api")!
     private lazy var signUpRequestURL = baseURL.appendingPathComponent("/users/signup")
@@ -56,8 +64,8 @@ class APIController {
                 //if response status is not 200...
                 response.statusCode != 200 {
                 //Creating the error to check response status
-                let statusCodeError = NSError(domain: "com.WesleyWhite.Gigs", code: response.statusCode, userInfo: nil)
-                completion(statusCodeError)
+                
+                completion(APIErrors.statusError)
             }
             //nil means there was no error, we are groovy.
             completion(nil)
@@ -89,8 +97,7 @@ class APIController {
             
             guard let data = data else {
                 NSLog("No data returned from data task")
-                let noDataError = NSError(domain: "com.WesleyWhite.Gigs", code: -1 , userInfo: nil)
-                completion(noDataError)
+                completion(APIErrors.statusError)
                 return
             }
             
@@ -112,5 +119,5 @@ class APIController {
     
     // create func for fetching gigs
     
-    // create func for fetching images
+    // create func for adding gigs
 }
