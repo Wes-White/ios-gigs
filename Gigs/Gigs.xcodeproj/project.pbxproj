@@ -19,6 +19,7 @@
 		0EEE28FD243D283E00DFFC38 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28FC243D283E00DFFC38 /* ApiController.swift */; };
 		0EEE2900243E28DE00DFFC38 /* GigDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28FF243E28DE00DFFC38 /* GigDetailViewController.swift */; };
 		0EEE2902243E290E00DFFC38 /* Gig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE2901243E290E00DFFC38 /* Gig.swift */; };
+		0EEE2904243E29BC00DFFC38 /* GigController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE2903243E29BC00DFFC38 /* GigController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		0EEE28FC243D283E00DFFC38 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		0EEE28FF243E28DE00DFFC38 /* GigDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GigDetailViewController.swift; path = Gigs/Storyboards/GigDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		0EEE2901243E290E00DFFC38 /* Gig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Gig.swift; path = "Gigs/View Controller/Gig.swift"; sourceTree = SOURCE_ROOT; };
+		0EEE2903243E29BC00DFFC38 /* GigController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				0EEE28FC243D283E00DFFC38 /* ApiController.swift */,
+				0EEE2903243E29BC00DFFC38 /* GigController.swift */,
 			);
 			path = "Model Controller";
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				0EEE28FB243D279900DFFC38 /* Bearer.swift in Sources */,
 				0EEE28DE243D1B5300DFFC38 /* SceneDelegate.swift in Sources */,
 				0EEE28F9243D1EF800DFFC38 /* User.swift in Sources */,
+				0EEE2904243E29BC00DFFC38 /* GigController.swift in Sources */,
 				0EEE28F5243D1CD800DFFC38 /* GigsTableViewController.swift in Sources */,
 				0EEE2902243E290E00DFFC38 /* Gig.swift in Sources */,
 			);

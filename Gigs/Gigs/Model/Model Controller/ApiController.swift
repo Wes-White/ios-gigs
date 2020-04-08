@@ -17,17 +17,27 @@ class APIController {
     }
     
     //api errors
-    enum APIErrors: Error {
-        case fetchingError
-        case decodingError
+    enum APIError: Error {
         case noDataError
-        case statusError
+        case noBearerError
+        //a server error That has an Error
+        case serverError(Error)
+        case statusCodeError
+        case decodingError
     }
     
+    enum HeaderNames: String {
+        case authorization = "Authorization"
+        case contentType = "Content-Type"
+    }
     
-    private let baseURL = URL(string: "https://lambdagigapi.herokuapp.com/api")!
+    let baseURL = URL(string: "https://lambdagigs.vapor.cloud/api")!
     private lazy var signUpRequestURL = baseURL.appendingPathComponent("/users/signup")
     private lazy var loginURL = baseURL.appendingPathComponent("/users/login")
+    private lazy var getAllGigsURL = baseURL.appendingPathComponent("/gigs/")
+    private lazy var postGigURL = baseURL.appendingPathComponent("/gigs/")
+    
+    var gigs: [Gig] = []
     
     var bearer: Bearer?
     
@@ -65,7 +75,7 @@ class APIController {
                 response.statusCode != 200 {
                 //Creating the error to check response status
                 
-                completion(APIErrors.statusError)
+                completion(APIError.statusCodeError)
             }
             //nil means there was no error, we are groovy.
             completion(nil)
@@ -97,7 +107,7 @@ class APIController {
             
             guard let data = data else {
                 NSLog("No data returned from data task")
-                completion(APIErrors.statusError)
+                completion(APIError.statusCodeError)
                 return
             }
             
@@ -117,7 +127,62 @@ class APIController {
         } .resume()
     }
     
-    // create func for fetching gigs
     
-    // create func for adding gigs
+    //create a func to get gigs- (Array of gigs for success and an error for failure.)
+    func getAllGigs(completion: @escaping (Result<[Gig], APIError>) -> Void) {
+        //build request
+        var request = URLRequest(url: getAllGigsURL)
+        //set http method
+        request.httpMethod = HTTPMethod.get.rawValue
+        //make sure user is authenticated
+        
+        //do we have a token?
+        guard let bearer = bearer else {
+            //result is failure, error is APIError case noBearer
+            completion(.failure(.noBearerError))
+            return
+        }
+        //set the value of the token in the HeaderField
+        request.setValue("Bear \(bearer.token)", forHTTPHeaderField: HeaderNames.authorization.rawValue)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                //Result is failed, error is the APIError that takes the error we recieve
+                NSLog("Error from server: \(error)")
+                completion(.failure(.serverError(error)))
+                return
+            }
+            // check the status code we recieved from the server
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                completion(.failure(.statusCodeError))
+            }
+            //make sure we have data being returned
+            guard let data = data else {
+                completion(.failure(.noDataError))
+                return
+            }
+            
+            do {
+                //decode the data we get returned.
+                let gigNames = try JSONDecoder().decode([Gig].self, from: data)
+                
+                self.gigs.append(contentsOf: gigNames)
+                //result type is success gigNames should be our decoded array of Gig.
+                completion(.success(gigNames))
+            } catch {
+                NSLog("Error decoding the returned data: \(error)")
+                completion(.failure(.decodingError))
+            }
+        }.resume()
+    }
+    
+    
+    
+    //create a func to post a new gig
+    
+    func postGig()  {
+        
+        //append to gigs array
+    }
 }
