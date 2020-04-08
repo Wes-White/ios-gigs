@@ -47,6 +47,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Gigs" id="3RG-1p-hPa"/>
+                    <connections>
+                        <segue destination="7z8-0F-fBe" kind="presentation" identifier="LoginSegue" id="Ds9-fI-m0f"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lbs-w2-JKI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -55,7 +58,7 @@
         <!--Login View Controller-->
         <scene sceneID="foO-fI-sdX">
             <objects>
-                <viewController id="7z8-0F-fBe" customClass="LoginViewController" customModule="Gigs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="7z8-0F-fBe" customClass="LoginViewController" customModule="Gigs" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fME-Ss-vgr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,15 +76,18 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Smj-iU-YEG">
                                 <rect key="frame" x="50" y="103" width="314" height="32"/>
                                 <segments>
+                                    <segment title="Sign Up "/>
                                     <segment title="Login"/>
-                                    <segment title="Sign Up"/>
                                 </segments>
+                                <connections>
+                                    <action selector="signInTypeChanged:" destination="7z8-0F-fBe" eventType="valueChanged" id="7wo-Th-jGC"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81D-dn-Dao">
                                 <rect key="frame" x="105" y="364" width="204" height="40"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Sign Up"/>
                                 <connections>
-                                    <action selector="loginButton:" destination="7z8-0F-fBe" eventType="touchUpInside" id="BSZ-ac-bra"/>
+                                    <action selector="buttonTapped:" destination="7z8-0F-fBe" eventType="touchUpInside" id="BSZ-ac-bra"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -105,6 +111,7 @@
                         <viewLayoutGuide key="safeArea" id="7H7-ge-Xug"/>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="81D-dn-Dao" id="7A8-Om-Y5s"/>
                         <outlet property="passwordTextField" destination="ixL-rH-tOt" id="PqJ-J1-xuW"/>
                         <outlet property="segmentedControll" destination="Smj-iU-YEG" id="tdP-lO-GbE"/>
                         <outlet property="usernameTextField" destination="7tW-hj-gst" id="thg-65-g13"/>

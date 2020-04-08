@@ -14,6 +14,9 @@
 		0EEE28E8243D1B5600DFFC38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EEE28E6243D1B5600DFFC38 /* LaunchScreen.storyboard */; };
 		0EEE28F5243D1CD800DFFC38 /* GigsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28F4243D1CD800DFFC38 /* GigsTableViewController.swift */; };
 		0EEE28F7243D1E4F00DFFC38 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28F6243D1E4F00DFFC38 /* LoginViewController.swift */; };
+		0EEE28F9243D1EF800DFFC38 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28F8243D1EF800DFFC38 /* User.swift */; };
+		0EEE28FB243D279900DFFC38 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28FA243D279900DFFC38 /* Bearer.swift */; };
+		0EEE28FD243D283E00DFFC38 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEE28FC243D283E00DFFC38 /* ApiController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		0EEE28E9243D1B5600DFFC38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EEE28F4243D1CD800DFFC38 /* GigsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GigsTableViewController.swift; path = Gigs/Storyboards/GigsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		0EEE28F6243D1E4F00DFFC38 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Gigs/Storyboards/LoginViewController.swift; sourceTree = SOURCE_ROOT; };
+		0EEE28F8243D1EF800DFFC38 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0EEE28FA243D279900DFFC38 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
+		0EEE28FC243D283E00DFFC38 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,8 +112,19 @@
 		0EEE28F3243D1BA500DFFC38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0EEE28FA243D279900DFFC38 /* Bearer.swift */,
+				0EEE28F8243D1EF800DFFC38 /* User.swift */,
+				0EEE28FE243D29CF00DFFC38 /* Model Controller */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0EEE28FE243D29CF00DFFC38 /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0EEE28FC243D283E00DFFC38 /* ApiController.swift */,
+			);
+			path = "Model Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,7 +200,10 @@
 			files = (
 				0EEE28F7243D1E4F00DFFC38 /* LoginViewController.swift in Sources */,
 				0EEE28DC243D1B5300DFFC38 /* AppDelegate.swift in Sources */,
+				0EEE28FD243D283E00DFFC38 /* ApiController.swift in Sources */,
+				0EEE28FB243D279900DFFC38 /* Bearer.swift in Sources */,
 				0EEE28DE243D1B5300DFFC38 /* SceneDelegate.swift in Sources */,
+				0EEE28F9243D1EF800DFFC38 /* User.swift in Sources */,
 				0EEE28F5243D1CD800DFFC38 /* GigsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
