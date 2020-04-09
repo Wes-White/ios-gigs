@@ -92,14 +92,22 @@ class GigsTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddGigSegue" {
-            if let detailVC = segue.destination as? GigDetailViewController {
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           
+            if segue.identifier == "GigDetailViewSegue" {
+                guard let ShowGigVC = segue.destination as? GigDetailViewController else {
+                    return
+                }
                 
                 guard let selected = tableView.indexPathForSelectedRow else { return }
                 
-                detailVC.gig = apiController.gigs[selected.row]
+                ShowGigVC.gig = apiController.gigs[selected.row]
+            } else if segue.identifier == "AddGigSegue" {
+                guard let ShowNewGigVC = segue.destination as? GigDetailViewController else {
+                    return
+                }
+                
+                ShowNewGigVC.apiController = apiController
             }
         }
     }
-}

@@ -197,13 +197,13 @@ class APIController {
         var request = URLRequest(url: postGigURL)
         request.httpMethod = HTTPMethod.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: HeaderNames.contentType.rawValue)
-        request.setValue("token", forHTTPHeaderField: HeaderNames.auth.rawValue)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: HeaderNames.auth.rawValue)
         
         let encoder = JSONEncoder()
         
         do {
             let jsonData = try encoder.encode(gig)
-            
+            request.httpBody = jsonData
         } catch {
             completion(.failure(.encodingError))
         }
@@ -216,6 +216,7 @@ class APIController {
             
             if let response = response as? HTTPURLResponse,
                 response.statusCode != 200 {
+                NSLog("Unexpected Status Code: \(response.statusCode)")
                 completion(.failure(.statusCodeError))
                
             }
