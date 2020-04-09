@@ -93,13 +93,21 @@ class GigsTableViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddGigSegue" {
-            if let detailVC = segue.destination as? GigDetailViewController {
-                
-                guard let selected = tableView.indexPathForSelectedRow else { return }
-                
-                detailVC.gig = apiController.gigs[selected.row]
+       
+        if segue.identifier == "GigDetailViewSegue" {
+            guard let ShowGigVC = segue.destination as? GigDetailViewController else {
+                return
             }
+            
+            guard let selected = tableView.indexPathForSelectedRow else { return }
+            
+            ShowGigVC.gig = apiController.gigs[selected.row]
+        } else if segue.identifier == "AddGigSegue" {
+            guard let ShowNewGigVC = segue.destination as? GigDetailViewController else {
+                return
+            }
+            
+            ShowNewGigVC.apiController = apiController
         }
     }
 }

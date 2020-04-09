@@ -32,7 +32,7 @@ class GigDetailViewController: UIViewController {
         guard let description = descriptionTextView.text,
             !descriptionTextView.text.isEmpty else { return }
         
-        let newGig = Gig(title: title, description: description, dueDate: "")
+        let newGig = Gig(title: title, description: description, dueDate: "2019-05-10T05:29:01Z")
         apiController.postGig(with: newGig) { (result) in
             
             do {

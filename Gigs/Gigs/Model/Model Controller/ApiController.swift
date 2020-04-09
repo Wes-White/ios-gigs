@@ -35,8 +35,8 @@ class APIController {
     let baseURL = URL(string: "https://lambdagigs.vapor.cloud/api")!
     private lazy var signUpRequestURL = baseURL.appendingPathComponent("/users/signup")
     private lazy var loginURL = baseURL.appendingPathComponent("/users/login")
-    private lazy var getAllGigsURL = baseURL.appendingPathComponent("gigs")
-    private lazy var postGigURL = baseURL.appendingPathComponent("gigs")
+    private lazy var getAllGigsURL = baseURL.appendingPathComponent("/gigs")
+    private lazy var postGigURL = baseURL.appendingPathComponent("/gigs")
     
     
     
@@ -196,8 +196,8 @@ class APIController {
         
         var request = URLRequest(url: postGigURL)
         request.httpMethod = HTTPMethod.post.rawValue
-        request.setValue("application/json", forHTTPHeaderField: HeaderNames.contentType.rawValue)
-        request.setValue("token", forHTTPHeaderField: HeaderNames.auth.rawValue)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: HeaderNames.auth.rawValue)
+         request.setValue("application/json", forHTTPHeaderField: HeaderNames.contentType.rawValue)
         
         let encoder = JSONEncoder()
         
@@ -216,6 +216,7 @@ class APIController {
             
             if let response = response as? HTTPURLResponse,
                 response.statusCode != 200 {
+                NSLog("THIS IS THE STATUSCODE FROM POST: \(response.statusCode)")
                 completion(.failure(.statusCodeError))
                
             }
