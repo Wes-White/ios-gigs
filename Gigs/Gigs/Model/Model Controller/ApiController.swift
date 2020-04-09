@@ -136,7 +136,7 @@ class APIController {
     func getAllGigs(completion: @escaping (Result<[Gig], APIError>) -> Void) {
         
         //do we have a token? checking from userDefaults
-
+        
         guard let token = UserDefaults.standard.value(forKey: "token")  else {
             //result is failure, error is APIError case noBearer
             completion(.failure(.noBearerError))
@@ -189,9 +189,9 @@ class APIController {
     func postGig(with gig: Gig, completion: @escaping (Result<Gig, APIError>) -> Void) {
         //do we have a token? checking from userDefaults
         guard let token = UserDefaults.standard.value(forKey: "token")  else {
-        //result is failure, error is APIError case noBearer
-        completion(.failure(.noBearerError))
-        return
+            //result is failure, error is APIError case noBearer
+            completion(.failure(.noBearerError))
+            return
         }
         
         var request = URLRequest(url: postGigURL)
@@ -200,10 +200,11 @@ class APIController {
         request.setValue("Bearer \(token)", forHTTPHeaderField: HeaderNames.auth.rawValue)
         
         let encoder = JSONEncoder()
-        
         do {
             let jsonData = try encoder.encode(gig)
+            
             request.httpBody = jsonData
+            print("THIS IS THE BODY \(request.httpBody!)")
         } catch {
             completion(.failure(.encodingError))
         }
@@ -218,7 +219,7 @@ class APIController {
                 response.statusCode != 200 {
                 NSLog("Unexpected Status Code: \(response.statusCode)")
                 completion(.failure(.statusCodeError))
-               
+                
             }
             
             guard let data = data else {
